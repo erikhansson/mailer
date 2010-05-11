@@ -18,7 +18,7 @@ module Mailer
 
           part :content_type => 'multipart/related' do |related|
             related.part :content_type => 'multipart/alternative' do |alternative|
-              alternative.part :content_type => 'text/plain', :body => 'foobar' # File.read('mail.txt')
+              alternative.part :content_type => 'text/plain', :body => File.read('mail.txt')
               alternative.part :content_type => 'text/html', :body => nil
             end
 
@@ -34,6 +34,7 @@ module Mailer
               end
               img.attributes['src'] = "cid:#{parts[img.attributes['src']].content_id[1...-1]}"
             end
+            related.parts[0].parts[1].content_type ['text', 'html', { 'charset' => 'UTF-8' }]
             related.parts[0].parts[1].body = doc.to_s
           end
         end

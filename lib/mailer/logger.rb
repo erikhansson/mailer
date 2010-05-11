@@ -5,11 +5,11 @@ module Mailer
     attr_accessor :sent, :failed
     
     def initialize(filename)
-      if File.exists?(filename)
+      if filename && File.exists?(filename)
         @file = File.open(filename, 'r+:UTF-8')
         @sent, @failed = Logger.read_log @file
       else
-        @file = File.open(filename, 'w:UTF-8')
+        @file = filename ? File.open(filename, 'w:UTF-8') : Tempfile.new('mailer_log')
         @sent, @failed = [], []
       end
       

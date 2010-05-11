@@ -18,7 +18,7 @@ module Mailer
 
           part :content_type => 'multipart/related' do |related|
             related.part :content_type => 'multipart/alternative' do |alternative|
-              alternative.part :content_type => 'text/plain', :body => File.read('mail.txt')
+              alternative.part :content_type => 'text/plain', :body => 'foobar' # File.read('mail.txt')
               alternative.part :content_type => 'text/html', :body => nil
             end
 
@@ -27,13 +27,12 @@ module Mailer
             parts = Hash.new
             
             images.each do |img|
-              if parts[img.attributes['src']]
-                img.attributes['src'] = parts[img.attributes['src']].content_id
-              else
+              unless parts[img.attributes['src']]
                 related.add_file img.attributes['src']
                 parts[img.attributes['src']] = related.parts[-1]
                 related.parts[-1].encoded
               end
+              img.attributes['src'] = "cid:#{parts[img.attributes['src']].content_id[1...-1]}"
             end
             related.parts[0].parts[1].body = doc.to_s
           end

@@ -1,6 +1,6 @@
 = mailer
 
-Description goes here.
+Utility for sending emails. Supports multipart text/html and text/plain emails with embedded images.
 
 == Note on Patches/Pull Requests
  

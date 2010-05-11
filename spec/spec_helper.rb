@@ -7,3 +7,7 @@ require 'spec/autorun'
 Spec::Runner.configure do |config|
   
 end
+
+def fixture_dir
+  File.dirname(__FILE__) + "/fixtures"
+end

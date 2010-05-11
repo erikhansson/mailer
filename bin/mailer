@@ -1,0 +1,52 @@
+#!/bin/env ruby
+
+require 'mailer'
+
+recipients_path, log_path = nil, nil
+ARGV.each do |arg|
+  if arg == "--nolog"
+    log_path = nil
+  else
+    recipients_path = arg
+    log_path = "#{arg}.log"
+  end
+end
+
+
+class CurrentMailer < Sender
+  def initialize(recipients_path, log_path)
+    @config = eval(File.read('config.rb'))
+    @builder = Mailer::Builder.new 'mail'
+    @recipients = Mailer::Recipients.load recipients_path
+    @log = Mailer::Logger log_path
+
+    @recipients -= @log.sent
+    @recipients -= @log.failed
+    
+    puts "Preparing emails"
+    puts "#{@recipients.length} recipients found"
+    puts "---"
+  end
+  
+  def next_mail
+    if to = @recipients.pop
+      @builder.build(@config.merge(:to => to)).tap do |mail|
+        mail.instance_variable_set('original_to', to)
+      end
+    end
+  end
+  
+  def success(mail)
+    to = mail.instance_variable_get('original_to')
+    puts "[SUCCESS/#{to}]"
+    @logger.success to
+  end
+  
+  def failure(mail)
+    to = mail.instance_variable_get('original_to')
+    puts ["FAILURE/#{to}"]
+    @logger.failure to
+  end
+end
+
+CurrentMailer.new(recipients_path, log_path).process

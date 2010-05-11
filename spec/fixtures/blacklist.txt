@@ -1,0 +1,2 @@
+blacklisted@email.com
+someone_completely_different@yahoo.se

@@ -10,10 +10,9 @@ begin
     gem.email = "erik@bits2life.com"
     gem.homepage = "http://github.com/erikhansson/mailer"
     gem.authors = ["Erik Hansson"]
-    gem.add_dependency "hpricot"
-    gem.add_dependency "mail"
+    gem.add_dependency "hpricot", '>= 0.8.2'
+    gem.add_dependency "mail", '>= 2.2.0'
     gem.add_development_dependency "rspec", ">= 1.2.9"
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

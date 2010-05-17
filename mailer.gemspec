@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mailer}
-  s.version = "0.0.2"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Erik Hansson"]
-  s.date = %q{2010-05-12}
+  s.date = %q{2010-05-17}
   s.default_executable = %q{mailer}
   s.description = %q{Sending lots of mail. Easily.}
   s.email = %q{erik@bits2life.com}
@@ -26,10 +26,14 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/mailer",
+     "lib/fix_protocol.rb",
      "lib/mailer.rb",
+     "lib/mailer/abstract_sender.rb",
      "lib/mailer/builder.rb",
      "lib/mailer/logger.rb",
      "lib/mailer/recipients.rb",
+     "lib/mailer/sender.rb",
+     "lib/mailer/smtp_connection.rb",
      "mailer.gemspec",
      "spec/fixtures/blacklist.txt",
      "spec/fixtures/email/headline.png",
@@ -60,17 +64,17 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<hpricot>, [">= 0"])
-      s.add_runtime_dependency(%q<mail>, [">= 0"])
+      s.add_runtime_dependency(%q<hpricot>, [">= 0.8.2"])
+      s.add_runtime_dependency(%q<mail>, [">= 2.2.0"])
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
     else
-      s.add_dependency(%q<hpricot>, [">= 0"])
-      s.add_dependency(%q<mail>, [">= 0"])
+      s.add_dependency(%q<hpricot>, [">= 0.8.2"])
+      s.add_dependency(%q<mail>, [">= 2.2.0"])
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
     end
   else
-    s.add_dependency(%q<hpricot>, [">= 0"])
-    s.add_dependency(%q<mail>, [">= 0"])
+    s.add_dependency(%q<hpricot>, [">= 0.8.2"])
+    s.add_dependency(%q<mail>, [">= 2.2.0"])
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
   end
 end

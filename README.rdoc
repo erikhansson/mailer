@@ -1,6 +1,8 @@
 = mailer
 
-Utility for sending emails. Supports multipart text/html and text/plain emails with embedded images.
+Utility for sending emails. Supports multipart text/html and text/plain emails with embedded images. Also includes a utility for sending the mail to a list of recipients which logs successfully sent emails so that the sending can be interrupted and resumed at a later time.
+
+NOTE: This is a utility I use personally, and not primarily for public consumption. Use at your own risk!
 
 == Note on Patches/Pull Requests
  

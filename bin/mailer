@@ -19,7 +19,7 @@ class CurrentMailer < BulkMail::Sender
     
     @config = eval(File.read('config.rb'))
     @builder = Mailer::Builder.new 'mail'
-    @recipients = Mailer::Recipients.load(recipients_path).uniq!
+    @recipients = Mailer::Recipients.load(recipients_path).uniq
     @logger = Mailer::Logger.new log_path
 
     if @logger

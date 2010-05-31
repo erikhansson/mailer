@@ -17,12 +17,6 @@ describe "Mailer::Recipients" do
       @addresses.should include('test@email.com')
     end
     
-    it "should exclude addresses logged as successfully sent to" do
-      pending 'This functionality is currently part of the Logger/mailer script' do
-        @addresses.should_not include('success@email.com')
-      end
-    end
-    
     it "should exclude blacklisted addresses" do
       @addresses.should_not include('blacklisted@email.com')
     end

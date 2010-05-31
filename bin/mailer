@@ -1,6 +1,7 @@
 #!/bin/env ruby
 
 require 'mailer'
+require 'mailer/script_mailer'
 
 recipients_path, log_path = nil, nil
 ARGV.each do |arg|
@@ -12,45 +13,5 @@ ARGV.each do |arg|
   end
 end
 
-
-class CurrentMailer < BulkMail::Sender
-  def initialize(recipients_path, log_path)
-    super(nil)
-    
-    @config = eval(File.read('config.rb'))
-    @builder = Mailer::Builder.new 'mail'
-    @recipients = Mailer::Recipients.load(recipients_path).uniq
-    @logger = Mailer::Logger.new log_path
-
-    if @logger
-      @recipients -= @logger.sent 
-      @recipients -= @logger.failed
-    end
-    
-    puts "Preparing emails"
-    puts "#{@recipients.length} recipients found"
-    puts "---"
-  end
-  
-  def next_mail
-    if to = @recipients.pop
-      @builder.build(@config.merge(:to => to)).tap do |mail|
-        mail.instance_variable_set('@original_to', to)
-      end
-    end
-  end
-  
-  def success(mail)
-    to = mail.instance_variable_get('@original_to')
-    puts "[SUCCESS/#{to}]"
-    @logger.success to
-  end
-  
-  def failure(mail)
-    to = mail.instance_variable_get('@original_to')
-    puts ["FAILURE/#{to}"]
-    @logger.failure to
-  end
-end
-
-CurrentMailer.new(recipients_path, log_path).process
+config = eval(File.read('config.rb'))
+ScriptMailer.new(recipients_path, log_path, config).process

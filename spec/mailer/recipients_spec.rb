@@ -11,14 +11,16 @@ describe "Mailer::Recipients" do
     end
     
     it "should load addresses from the given file" do
-      @addresses.length.should == 5
+      @addresses.length.should == 6
       @addresses.should include('test@email.com')
       @addresses.should include('i_am_email@foobar.se')
       @addresses.should include('test@email.com')
     end
     
     it "should exclude addresses logged as successfully sent to" do
-      @addresses.should_not include('success@email.com')
+      pending 'This functionality is currently part of the Logger/mailer script' do
+        @addresses.should_not include('success@email.com')
+      end
     end
     
     it "should exclude blacklisted addresses" do

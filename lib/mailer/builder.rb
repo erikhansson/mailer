@@ -10,6 +10,7 @@ module Mailer
     
     def build(options)
       result = nil
+      builder = self
       Dir.chdir @path do
         result = Mail.new do
           from options[:from]
@@ -18,11 +19,12 @@ module Mailer
 
           part :content_type => 'multipart/related' do |related|
             related.part :content_type => 'multipart/alternative' do |alternative|
-              alternative.part :content_type => 'text/plain', :body => File.read('mail.txt')
+              alternative.part :content_type => 'text/plain', :body => builder.read_file_or_template('mail.txt', options[:variables])
               alternative.part :content_type => 'text/html', :body => nil
             end
 
-            doc = Hpricot(File.read('mail.html'))
+            doc = Hpricot(builder.read_file_or_template('mail.html', options[:variables]))
+
             images = doc / 'img'
             parts = Hash.new
             
@@ -41,7 +43,16 @@ module Mailer
         
         result
       end
-      
+    end
+    
+    def read_file_or_template(filename, variables)
+      variables ||= {}
+      if File.exists?(filename)
+        File.read filename
+      elsif File.exists?("#{filename}.erb")
+        template = ERB.new File.read("#{filename}.erb")
+        template.result(variables.to_binding)
+      end
     end
     
   end

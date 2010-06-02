@@ -1,10 +1,10 @@
 require 'net/smtp'
 
 
-module BulkMail
+module Mailer
   
-  class BulkMailError < RuntimeError; end
-  class ConnectionNotOpenError < BulkMailError; end
+  class MailerError < RuntimeError; end
+  class ConnectionNotOpenError < MailerError; end
   
     
   class SmtpConnection
@@ -21,7 +21,8 @@ module BulkMail
     attr_reader :settings
     
     def initialize(settings = nil)
-      @settings = settings || eval(File.read(File.expand_path('~/.config/smtp.rb')))
+      @settings = Options.smtp_options(settings)
+      
       @settings.keys.each do |key|
         raise ArgumentError.new("invalid option, {"+key.to_s+" => "+@settings[key].to_s+"}") unless [
             :host, :port, :username, :password, :authentication, :domain, :max_connections

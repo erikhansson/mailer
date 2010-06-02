@@ -1,4 +1,4 @@
-class ScriptMailer < BulkMail::Sender
+class ScriptMailer < Mailer::Sender
   
   attr_accessor :recipients
   

@@ -1,5 +1,5 @@
 
-module BulkMail
+module Mailer
   
   # Include Mailer to provide a bulk mailer implementation. Basically,
   # :next_mail should return a mail instance to send, :success(mail) and 

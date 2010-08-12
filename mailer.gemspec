@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mailer}
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Erik Hansson"]
-  s.date = %q{2010-05-31}
+  s.date = %q{2010-06-02}
   s.default_executable = %q{mailer}
   s.description = %q{Sending lots of mail. Easily.}
   s.email = %q{erik@bits2life.com}
@@ -31,7 +31,9 @@ Gem::Specification.new do |s|
      "lib/mailer/abstract_sender.rb",
      "lib/mailer/builder.rb",
      "lib/mailer/logger.rb",
+     "lib/mailer/options.rb",
      "lib/mailer/recipients.rb",
+     "lib/mailer/script_mailer.rb",
      "lib/mailer/sender.rb",
      "lib/mailer/smtp_connection.rb",
      "mailer.gemspec",
@@ -41,9 +43,13 @@ Gem::Specification.new do |s|
      "spec/fixtures/email/mail.txt",
      "spec/fixtures/recipients",
      "spec/fixtures/recipients.log",
+     "spec/fixtures/template_mail/mail.html.erb",
+     "spec/fixtures/template_mail/mail.txt.erb",
      "spec/mailer/builder_spec.rb",
      "spec/mailer/logger_spec.rb",
+     "spec/mailer/mailer_spec.rb",
      "spec/mailer/recipients_spec.rb",
+     "spec/mailer/script_mailer_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
   ]
@@ -55,7 +61,9 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/mailer/builder_spec.rb",
      "spec/mailer/logger_spec.rb",
+     "spec/mailer/mailer_spec.rb",
      "spec/mailer/recipients_spec.rb",
+     "spec/mailer/script_mailer_spec.rb",
      "spec/spec_helper.rb"
   ]
 
